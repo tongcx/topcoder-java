@@ -7,6 +7,10 @@ class Graph {
   // node arrays
   int[] elast;
 
+  boolean isRev(int e) {
+    return e%2 == 1;
+  }
+
   int einv(int e) {
     return e^1;
   }
