@@ -1,2 +1,5 @@
 .idea
 out
+*.in
+*.out
+*.txt
