@@ -122,7 +122,7 @@ public class BeamJoy {
         twoSat.addClause(h, v);
       }
     }
-    if (!twoSat.run()) {
+    if (!twoSat.aspvall()) {
       System.out.println(IMPOSSIBLE);
       return;
     }

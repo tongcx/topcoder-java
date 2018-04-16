@@ -25,7 +25,7 @@ class MaxFlow {
     return e;
   }
 
-  long run(int source, int sink) {
+  long dinic(int source, int sink) {
     while (bfs(source, sink)) {
       System.arraycopy(g.elast, 0, now, 0, g.n);
       while (dfs(source, Long.MAX_VALUE, sink) > 0);

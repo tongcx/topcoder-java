@@ -98,7 +98,7 @@ public class ShootTurrets {
         }
       }
     }
-    System.out.println(bm.run());
+    System.out.println(bm.hopcroftKarp());
   }
 
   public static void main(String[] args) throws Exception {

@@ -43,7 +43,7 @@ class SCC {
     }
   }
 
-  void run() {
+  void kosaraju() {
     for (int u = 0; u < g.n; u++) {
       dfs(u);
     }

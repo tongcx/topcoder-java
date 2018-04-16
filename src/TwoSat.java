@@ -17,9 +17,9 @@ class TwoSat {
     g.addEdge(v^1, u);
   }
 
-  boolean run() {
+  boolean aspvall() {
     SCC scc = new SCC(g);
-    scc.run();
+    scc.kosaraju();
     for (int i = 0; i < nVar; i++) {
       if (scc.comp[i*2] == scc.comp[i*2+1])
         return false;

@@ -31,7 +31,7 @@ class BiMatch {
     return mf.addEdge(lnode(u), rnode(v), 1);
   }
 
-  long run() {
-    return mf.run(source(), sink());
+  long hopcroftKarp() {
+    return mf.dinic(source(), sink());
   }
 }
