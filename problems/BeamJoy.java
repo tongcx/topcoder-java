@@ -2,7 +2,8 @@ import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+// codejam 2017 round 2
+public class BeamJoy {
   static String IMPOSSIBLE = "IMPOSSIBLE";
   static String POSSIBLE = "POSSIBLE";
   static int[] dr = {-1, 1, 0, 0};
@@ -13,7 +14,7 @@ public class Main {
   int[][] hshooter;
   int[][] vshooter;
 
-  Main(Scanner s) {
+  BeamJoy(Scanner s) {
     R = s.nextInt();
     C = s.nextInt();
     board = new String[R];
@@ -146,7 +147,7 @@ public class Main {
     int T = s.nextInt();
     for (int t = 1; t <= T; t++) {
       System.out.format("Case #%d: ", t);
-      new Main(s).run();
+      new BeamJoy(s).run();
     }
   }
 }
