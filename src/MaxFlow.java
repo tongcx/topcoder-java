@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-class Dinic {
+class MaxFlow {
   Graph g;
   long f;
   // edge arrays
@@ -12,7 +12,7 @@ class Dinic {
     return capa[e] - flow[e];
   }
 
-  Dinic(int nNodes, int nEdges) {
+  MaxFlow(int nNodes, int nEdges) {
     g = new Graph(nNodes, nEdges);
     flow = new long[2 * g.m]; capa = new long[2 * g.m];
     level = new int[g.n]; now = new int[g.n];
