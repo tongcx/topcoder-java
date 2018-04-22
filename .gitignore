@@ -3,3 +3,5 @@ out
 *.in
 *.out
 *.txt
+*.jar
+.editorconfig
