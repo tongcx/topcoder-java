@@ -22,7 +22,6 @@ class Graph {
   Graph(int nNodes, int nEdges) {
     n = nNodes;
     m = nEdges;
-    eidx = 0;
 
     ehead = new int[2*m]; eprev = new int[2*m];
     elast = new int[n];
