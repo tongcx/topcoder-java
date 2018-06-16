@@ -1,82 +1,86 @@
 import java.util.*;
 
-class MinCostMaxFlow {
-  long[] flow, capa;
-  double[] cost;
-  int[] eadj, eprev, elast;
-  int eidx, N, M;
-  long totalFlow;
-  double totalCost;
+class MinCostMaxFlow extends Graph {
+  long[] flow, capa, cost, pot;
+  long totalFlow, totalCost;
 
-  MinCostMaxFlow(int nodes, int edges) {
-    this.N = nodes;
-    this.M = edges;
+  MinCostMaxFlow(int nNodes, int nEdges) {
+    super(nNodes, nEdges);
 
-    flow = new long[2 * M];
-    capa = new long[2 * M];
-    cost = new double[2 * M];
-    eadj = new int[2 * M];
-    eprev = new int[2 * M];
-    elast = new int[N];
-    Arrays.fill(elast, -1);
+    flow = new long[2 * m];
+    capa = new long[2 * m];
+    cost = new long[2 * m];
+    pot = new long[2 * m];
   }
 
-  void add_edge(int a, int b, long c, double t) {
-    eadj[eidx] = b;
-    flow[eidx] = 0;
-    capa[eidx] = c;
-    cost[eidx] = t;
-    eprev[eidx] = elast[a];
-    elast[a] = eidx++;
-    eadj[eidx] = a;
-    flow[eidx] = 0;
-    capa[eidx] = 0;
-    cost[eidx] = -t;
-    eprev[eidx] = elast[b];
-    elast[b] = eidx++;
+  long resCapa(int e) {
+    return capa[e] - flow[e];
   }
 
-  double ssp(int source, int sink) {
-    while (spfa(source, sink)) {
-      ;
-    }
+  long resCost(int e) {
+    return pot[etail(e)] + cost[e] - pot[ehead[e]];
+  }
+
+  int addEdge(int u, int v, long ca, long co) {
+    int e = super.addEdge(u, v);
+    capa[e] = ca;
+    cost[e] = co;
+    cost[einv(e)] = -co;
+    return e;
+  }
+
+  long ssp(int source, int sink) {
+    while (dijkstra(source, sink));
     return totalCost;
   }
 
-  boolean spfa(int source, int sink) {
-    int[] ent = new int[N];
-    double[] dist = new double[N];
-    Arrays.fill(dist, Double.POSITIVE_INFINITY);
+  boolean dijkstra(int source, int sink) {
+    class Entry {
+      int e, u;
+      long d;
 
-    Queue<Integer> q = new ArrayDeque<>();
-    q.add(source);
-    dist[source] = 0;
-    ent[source] = -1;
-    while (!q.isEmpty()) {
-      int u = q.remove();
-      for (int e = elast[u]; e != -1; e = eprev[e]) {
-        if (flow[e] < capa[e] && dist[eadj[e]] > dist[u] + cost[e]) {
-          q.add(eadj[e]);
-          dist[eadj[e]] = dist[u] + cost[e];
-          ent[eadj[e]] = e;
-        }
+      Entry(int e, int u, long d) {
+        this.e = e;
+        this.u = u;
+        this.d = d;
       }
     }
 
-    if (dist[sink] == Double.POSITIVE_INFINITY) {
-      return false;
-    }
-    long curflow = Long.MAX_VALUE;
-    for (int e = ent[sink]; e != -1; e = ent[eadj[e ^ 1]]) {
-      curflow = Math.min(curflow, capa[e] - flow[e]);
-    }
-    totalFlow += curflow;
+    long[] dist = new long[n];
+    int[] parent = new int[n];
+    Arrays.fill(dist, Long.MAX_VALUE);
+    PriorityQueue<Entry> pq = new PriorityQueue<>(Comparator.comparingLong(entry -> entry.d));
+    pq.add(new Entry(-1, source, 0));
 
-    for (int e = ent[sink]; e != -1; e = ent[eadj[e ^ 1]]) {
-      flow[e] += curflow;
-      flow[e ^ 1] -= curflow;
-      totalCost += curflow * cost[e];
+    while(!pq.isEmpty()) {
+      Entry entry = pq.remove();
+      int u = entry.u;
+      if (dist[u] != Long.MAX_VALUE) continue;
+      dist[u] = entry.d;
+      parent[u] = entry.e;
+      for (int e = elast[u]; e != -1; e = eprev[e]) {
+        if (resCapa(e) == 0) continue;
+        pq.add(new Entry(e, ehead[e], dist[u] + resCost(e)));
+      }
     }
+
+    if (dist[sink] == Long.MAX_VALUE) return false;
+
+    long delta = Long.MAX_VALUE;
+    for (int e = parent[sink]; e != -1; e = parent[etail(e)]) {
+      delta = Math.min(delta, resCapa(e));
+    }
+    for (int e = parent[sink]; e != -1; e = parent[etail(e)]) {
+      flow[e] += delta;
+      flow[einv(e)] -= delta;
+      totalCost += cost[e] * delta;
+    }
+    totalFlow += delta;
+
+    for (int u = 0; u < n; u++)
+      if (dist[u] != Long.MAX_VALUE)
+        pot[u] += dist[u];
+
     return true;
   }
 }

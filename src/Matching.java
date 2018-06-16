@@ -1,4 +1,4 @@
-class BiMatch {
+class Matching {
   int nl, nr;
   MaxFlow mf;
 
@@ -18,7 +18,7 @@ class BiMatch {
     return source() + 1;
   }
 
-  BiMatch(int nLNodes, int nRNodes, int nEdges) {
+  Matching(int nLNodes, int nRNodes, int nEdges) {
     mf = new MaxFlow(nLNodes + nRNodes + 2, nLNodes + nRNodes + nEdges);
     nl = nLNodes;
     nr = nRNodes;

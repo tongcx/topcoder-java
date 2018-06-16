@@ -9,7 +9,7 @@ public class ShootTurrets {
 
   int R, C, M;
   String[] board;
-  BiMatch bm;
+  Matching bm;
   int sidx, tidx;
   int[][] sid;
   int[][] tid;
@@ -90,7 +90,7 @@ public class ShootTurrets {
   }
 
   void run() {
-    bm = new BiMatch(sidx, tidx, sidx * tidx);
+    bm = new Matching(sidx, tidx, sidx * tidx);
     for (int r = 0; r < R; r++) {
       for (int c = 0; c < C; c++) {
         if (isSolider(r, c)) {

@@ -20,7 +20,7 @@ class MaxFlow {
 
   int addEdge(int u, int v, long capacity) {
     int e = g.addEdge(u, v);
-    flow[e]  = 0; capa[e] = capacity;
+    flow[e] = 0; capa[e] = capacity;
     flow[g.einv(e)] = 0; capa[g.einv(e)] = 0;
     return e;
   }
