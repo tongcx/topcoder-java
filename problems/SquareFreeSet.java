@@ -1,11 +1,7 @@
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
-import java.util.function.Function;
 
 // TCO 18 2B
 public class SquareFreeSet {
